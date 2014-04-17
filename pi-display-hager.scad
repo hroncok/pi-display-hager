@@ -52,8 +52,9 @@ display_w_offset = 10;
 display_h_offset = 1;
 
 // What to render
-//box();
-front();
+box();
+translate([0,-front_h-wall,0])
+	front();
 
 module box() {
 	difference() {
