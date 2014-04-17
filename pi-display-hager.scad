@@ -54,6 +54,7 @@ display_h_offset = 1;
 // What to render
 box();
 translate([0,-front_h-wall,0])
+//translate([0,-(front_h-pi_h)/2+wall+margin*2,-wall])
 	front();
 
 module box() {
