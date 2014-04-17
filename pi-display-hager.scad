@@ -37,16 +37,50 @@ power_h = 8;
 power_w = 10;
 power_offset = 2.5;
 
-difference() {
-	bottom();
-	usb_ethernet();
-	jack();
-	video();
-	sd();
-	hdmi();
-	power();
+
+// the front face
+front_h = 82;
+front_border = 25;
+front_offset = 10;
+front_depth = 15;
+front_second = 8;
+
+// display
+display_w = 65;
+display_h = 47;
+display_w_offset = 10;
+display_h_offset = 1;
+
+// What to render
+//box();
+front();
+
+module box() {
+	difference() {
+		bottom();
+		usb_ethernet();
+		jack();
+		video();
+		sd();
+		hdmi();
+		power();
+	}
 }
 
+module front() {
+	difference() {
+		cube([front_border*2+display_w,front_h,wall]);
+		translate([front_border,(front_h-display_h)/2,-wall]) cube([display_w,display_h,wall*3]);
+	}
+	translate([front_offset,0,0])
+		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([front_offset,front_h-wall,0])
+		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([front_offset,front_second,0])
+		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([front_offset,front_h-wall-front_second,0])
+		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+}
 
 module bottom() {
 	difference() {
