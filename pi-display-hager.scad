@@ -2,7 +2,7 @@
 // basics
 pi_w = 85;
 pi_h = 55;
-margin = 1;
+margin = 2;
 wall = 2.5;
 depth = 30;
 
@@ -93,7 +93,7 @@ module front() {
 module bottom() {
 	difference() {
 		cube([pi_w+2*margin+2*wall,pi_h+2*margin+2*wall,depth]);
-		translate([wall+margin,wall+margin,-wall]) cube([pi_w,pi_h,depth+2*wall]);
+		translate([wall+margin/2,wall+margin/2,-wall]) cube([pi_w+margin,pi_h+margin,depth+2*wall]);
 	}
 }
 
@@ -115,7 +115,7 @@ module poles() {
 
 module sd() {
 	translate([pi_w+wall*1.5,wall+margin+sd_offset,wall])
-		cube([2*wall,sd_w,sd_h]);
+		cube([3*wall,sd_w,sd_h]);
 }
 
 module jack() {
@@ -130,12 +130,12 @@ module video() {
 
 module hdmi() {
 	translate([wall+margin+hdmi_offset,pi_h+wall*1.5,wall])
-		cube([hdmi_w,2*wall,hdmi_h]);
+		cube([hdmi_w,3*wall,hdmi_h]);
 }
 
 module power() {
 	translate([pi_w+wall*1.5,wall+margin+pi_h-power_w-power_offset,wall])
-		cube([2*wall,power_w,power_h]);
+		cube([3*wall,power_w,power_h]);
 }
 
 
