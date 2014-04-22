@@ -3,7 +3,7 @@
 pi_w = 85;
 pi_h = 55;
 margin = 1;
-wall = 2;
+wall = 2.5;
 depth = 30;
 
 // USB + ethernet hole
@@ -52,9 +52,10 @@ display_w_offset = 10;
 display_h_offset = 1;
 
 // What to render
-box();
+translate([+((display_w+2*front_border)-pi_w)/2-wall*2,-(front_h-pi_h-wall)/2,depth+wall])
+	rotate([180,0,0])
+		box();
 translate([0,-front_h-wall,0])
-//translate([0,-(front_h-pi_h)/2+wall+margin*2,-wall])
 	front();
 
 module box() {
@@ -67,33 +68,49 @@ module box() {
 		hdmi();
 		power();
 	}
+	poles();
 }
 
 module front() {
 	difference() {
 		cube([front_border*2+display_w,front_h,wall]);
-		translate([front_border,(front_h-display_h)/2,-wall]) cube([display_w,display_h,wall*3]);
+		translate([front_border,(front_h-display_h)/2-wall*2,-wall]) cube([display_w,display_h,wall*3]);
 	}
 	translate([front_offset,0,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([front_offset,0,0])
+		cube([display_w+2*front_border-2*front_offset,front_second,3*wall]);
 	translate([front_offset,front_h-wall,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
 	translate([front_offset,front_second,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
 	translate([front_offset,front_h-wall-front_second,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([front_offset,front_h-wall-front_second,0])
+		cube([display_w+2*front_border-2*front_offset,front_second,3*wall]);
 }
 
 module bottom() {
 	difference() {
 		cube([pi_w+2*margin+2*wall,pi_h+2*margin+2*wall,depth]);
-		translate([wall+margin,wall+margin,wall]) cube([pi_w,pi_h,depth]);
+		translate([wall+margin,wall+margin,-wall]) cube([pi_w,pi_h,depth+2*wall]);
 	}
 }
 
 module usb_ethernet() {
 	translate([-wall/2,wall+margin+pi_h-usb_w-usb_offset,wall])
 		cube([2*wall,usb_w,usb_h]);
+}
+
+module poles() {
+	translate([-wall*3,wall*3,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
+	translate([wall*3+pi_w-margin,wall*3,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
 }
 
 module sd() {
