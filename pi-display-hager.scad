@@ -30,7 +30,7 @@ sd_offset = 12;
 // HDMI hole
 hdmi_h = 12;
 hdmi_w = 18;
-hdmi_offset = 33;
+hdmi_offset = 30;
 
 // Power USB hole
 power_h = 8;
