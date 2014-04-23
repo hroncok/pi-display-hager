@@ -74,20 +74,20 @@ module box() {
 module front() {
 	difference() {
 		cube([front_border*2+display_w,front_h,wall]);
-		translate([front_border,(front_h-display_h)/2-wall*2,-wall]) cube([display_w,display_h,wall*3]);
+		translate([front_border,(front_h-display_h)/2-wall*1.5,-wall]) cube([display_w,display_h,wall*3]);
 	}
 	translate([front_offset,0,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
 	translate([front_offset,0,0])
-		cube([display_w+2*front_border-2*front_offset,front_second,3*wall]);
+		cube([display_w+2*front_border-2*front_offset,front_second+wall,3.5*wall]);
 	translate([front_offset,front_h-wall,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
-	translate([front_offset,front_second,0])
-		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	//translate([front_offset,front_second,0])
+		//cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	//translate([front_offset,front_h-wall-front_second,0])
+		//cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
 	translate([front_offset,front_h-wall-front_second,0])
-		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
-	translate([front_offset,front_h-wall-front_second,0])
-		cube([display_w+2*front_border-2*front_offset,front_second,3*wall]);
+		cube([display_w+2*front_border-2*front_offset,front_second,3.5*wall]);
 }
 
 module bottom() {
@@ -98,7 +98,7 @@ module bottom() {
 }
 
 module usb_ethernet() {
-	translate([-wall/2,wall+margin+pi_h-usb_w-usb_offset,wall])
+	translate([-wall/2,wall+margin+pi_h-usb_w-usb_offset,0])
 		cube([2*wall,usb_w,usb_h]);
 }
 
@@ -107,7 +107,7 @@ module poles() {
 		cube([3*wall,3*wall,depth+wall]);
 		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
 	}
-	translate([wall*3+pi_w-margin,wall*3,0]) difference() {
+	translate([wall*4+pi_w-margin,wall*3,0]) difference() {
 		cube([3*wall,3*wall,depth+wall]);
 		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
 	}
@@ -119,22 +119,22 @@ module sd() {
 }
 
 module jack() {
-	translate([wall+margin+jack_offset,-wall/2,wall])
-		cube([jack_w,2*wall,jack_h]);
+	translate([wall+margin+jack_offset,-wall/2,0])
+		cube([jack_w,2*wall,jack_h+2*wall]);
 }
 
 module video() {
-	translate([wall+margin+video_offset,-wall/2,wall])
-		cube([video_w,2*wall,video_h]);
+	translate([wall+margin+video_offset,-wall/2,0])
+		cube([video_w,2*wall,video_h+wall]);
 }
 
 module hdmi() {
-	translate([wall+margin+hdmi_offset,pi_h+wall*1.5,wall])
-		cube([hdmi_w,3*wall,hdmi_h]);
+	translate([wall+margin+hdmi_offset,pi_h+wall*1.5,0])
+		cube([hdmi_w,3*wall,hdmi_h+wall]);
 }
 
 module power() {
-	translate([pi_w+wall*1.5,wall+margin+pi_h-power_w-power_offset,wall])
+	translate([pi_w+wall*1.5,wall+margin+pi_h-power_w-power_offset,wall*3])
 		cube([3*wall,power_w,power_h]);
 }
 
