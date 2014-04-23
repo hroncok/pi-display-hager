@@ -19,7 +19,7 @@ jack_offset = 16;
 // Video hole
 video_w = 12;
 video_h = 20;
-video_offset = 34;
+video_offset = 32;
 
 // SD card hole
 sd_h = 5;
