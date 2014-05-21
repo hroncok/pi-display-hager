@@ -58,6 +58,8 @@ translate([+((display_w+2*front_border)-pi_w)/2-wall*2,-(front_h-pi_h-wall)/2,de
 translate([0,-front_h-wall,0])
 	front();
 
+//back();
+
 module box() {
 	difference() {
 		bottom();
@@ -69,6 +71,16 @@ module box() {
 		power();
 	}
 	poles();
+}
+
+module back() {
+    difference() {
+        cube([pi_w+2*margin+8*wall,pi_h+2*margin+2*wall,wall]);
+        translate([wall*1.5,wall*4.5,-1*wall])
+            cylinder(r=wall*0.7,h=3*wall);
+        translate([pi_w+2*margin+6.5*wall,wall*4.5,-1*wall])
+            cylinder(r=wall*0.7,h=3*wall);
+    }
 }
 
 module front() {
