@@ -22,18 +22,18 @@ video_h = 20;
 video_offset = 32;
 
 // SD card hole
-sd_h = 5;
-sd_w = 29;
+sd_h = 50;
+sd_w = 31;
 sd_offset = 12;
 
 
 // HDMI hole
-hdmi_h = 12;
-hdmi_w = 18;
+hdmi_h = 15;
+hdmi_w = 26;
 hdmi_offset = 30;
 
 // Power USB hole
-power_h = 8;
+power_h = 50;
 power_w = 10;
 power_offset = 2.5;
 
@@ -48,6 +48,7 @@ front_second = 8;
 // display
 display_w = 65;
 display_h = 47;
+display_dead = 5;
 display_w_offset = 10;
 display_h_offset = 1;
 
@@ -86,7 +87,7 @@ module back() {
 module front() {
 	difference() {
 		cube([front_border*2+display_w,front_h,wall]);
-		translate([front_border,(front_h-display_h)/2-wall*1.5,-wall]) cube([display_w,display_h,wall*3]);
+		translate([front_border+display_dead,(front_h-display_h)/2-wall*1.5,-wall]) cube([display_w-display_dead,display_h,wall*3]);
 	}
 	translate([front_offset,0,0])
 		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
@@ -123,6 +124,14 @@ module poles() {
 		cube([3*wall,3*wall,depth+wall]);
 		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
 	}
+	translate([wall*4+pi_w-margin,display_h+wall*4.3,0]) difference() {
+		cube([2.5*wall,2.5*wall,depth+wall]);
+		translate([wall*1.25,wall*1.25,0]) cylinder(r=wall*0.5,h=depth+3*wall);
+	}
+	translate([-wall*2.5,display_h+wall*4.3,0]) difference() {
+		cube([2.5*wall,2.5*wall,depth+wall]);
+		translate([wall*1.25,wall*1.25,0]) cylinder(r=wall*0.5,h=depth+3*wall);
+	}
 }
 
 module sd() {
@@ -146,7 +155,7 @@ module hdmi() {
 }
 
 module power() {
-	translate([pi_w+wall*1.5,wall+margin+pi_h-power_w-power_offset,wall*3])
+	translate([pi_w+wall*1.5,wall+margin+pi_h-power_w-power_offset,wall])
 		cube([3*wall,power_w,power_h]);
 }
 
