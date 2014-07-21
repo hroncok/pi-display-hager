@@ -52,6 +52,12 @@ display_dead = 5;
 display_w_offset = 10;
 display_h_offset = 1;
 
+
+// Dekan hack
+dekan_utp = 40;
+dekan_microusb = 20;
+
+
 // What to render
 translate([+((display_w+2*front_border)-pi_w)/2-wall*2,-(front_h-pi_h-wall)/2,depth+wall])
 	rotate([180,0,0])
@@ -59,7 +65,7 @@ translate([+((display_w+2*front_border)-pi_w)/2-wall*2,-(front_h-pi_h-wall)/2,de
 translate([0,-front_h-wall,0])
 	front();
 
-//back();
+back();
 
 module box() {
 	difference() {
@@ -75,26 +81,38 @@ module box() {
 }
 
 module back() {
-    difference() {
-        cube([pi_w+2*margin+8*wall,pi_h+2*margin+2*wall,wall]);
-        translate([wall*1.5,wall*4.5,-1*wall])
-            cylinder(r=wall*0.7,h=3*wall);
-        translate([pi_w+2*margin+6.5*wall,wall*4.5,-1*wall])
-            cylinder(r=wall*0.7,h=3*wall);
-    }
+	translate([-dekan_utp,0,0]) cube([dekan_utp+dekan_microusb+front_border*2+display_w,front_h,wall]);
+	translate([-dekan_utp,0,0])
+		cube([display_w+2*front_border+dekan_utp+dekan_microusb,wall,front_depth+wall]);
+	translate([-dekan_utp,front_h-wall,0])
+		cube([display_w+2*front_border+dekan_utp+dekan_microusb,wall,front_depth+wall]);
+	translate([-dekan_utp,0,0]) difference() {
+		cube([wall,front_h,front_depth+wall]);
+		translate([-wall,front_h/2,front_depth+wall]) rotate([0,90,0]) cylinder(r=7,h=3*wall);
+	}
+	translate([dekan_microusb+front_border*2+display_w-wall,0,0])
+		cube([wall,front_h,front_depth+wall]);
+
 }
 
 module front() {
+
 	difference() {
-		cube([front_border*2+display_w,front_h,wall]);
+		translate([-dekan_utp,0,0]) cube([dekan_utp+dekan_microusb+front_border*2+display_w,front_h,wall]);
 		translate([front_border+display_dead,(front_h-display_h)/2-wall*1.5,-wall]) cube([display_w-display_dead,display_h,wall*3]);
 	}
-	translate([front_offset,0,0])
-		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([-dekan_utp,0,0])
+		cube([display_w+2*front_border+dekan_utp+dekan_microusb,wall,front_depth+wall]);
 	translate([front_offset,0,0])
 		cube([display_w+2*front_border-2*front_offset,front_second+wall,3.5*wall]);
-	translate([front_offset,front_h-wall,0])
-		cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
+	translate([-dekan_utp,front_h-wall,0])
+		cube([display_w+2*front_border+dekan_utp+dekan_microusb,wall,front_depth+wall]);
+	translate([-dekan_utp,0,0]) difference() {
+		cube([wall,front_h,front_depth+wall]);
+		translate([-wall,front_h/2,front_depth+wall]) rotate([0,90,0]) cylinder(r=7,h=3*wall);
+	}
+	translate([dekan_microusb+front_border*2+display_w-wall,0,0])
+		cube([wall,front_h,front_depth+wall]);
 	//translate([front_offset,front_second,0])
 		//cube([display_w+2*front_border-2*front_offset,wall,front_depth]);
 	//translate([front_offset,front_h-wall-front_second,0])
@@ -124,6 +142,25 @@ module poles() {
 		cube([3*wall,3*wall,depth+wall]);
 		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
 	}
+	translate([wall*4.8+pi_w-margin+dekan_microusb,-wall*3,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
+	translate([wall*4.8+pi_w-margin+dekan_microusb,-wall*8+front_h,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
+
+	translate([-dekan_utp-wall*3,-wall*3,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
+	translate([-dekan_utp-wall*3,-wall*8+front_h,0]) difference() {
+		cube([3*wall,3*wall,depth+wall]);
+		translate([wall*1.5,wall*1.5,0]) cylinder(r=wall*0.7,h=depth+3*wall);
+	}
+
+
 	translate([wall*4+pi_w-margin,display_h+wall*4.3,0]) difference() {
 		cube([2.5*wall,2.5*wall,depth+wall]);
 		translate([wall*1.25,wall*1.25,0]) cylinder(r=wall*0.5,h=depth+3*wall);
